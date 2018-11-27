@@ -2,6 +2,8 @@ let health = document.getElementById('health');
 health.value = 100;
 health.max = 100;
 
+let score = 0
+
 let damage = document.getElementById('damage');
 damage.innerHTML = "Smash that goblin!!";
 
@@ -78,7 +80,8 @@ button.onclick = function() {
     playAgain.disabled = false;
     playAgain.style.display = 'block';
     console.log('game end')
-
+    score += 1
+    playerScore.innerHTML = "Goblins Defeated: " + score
   }
 };
 
