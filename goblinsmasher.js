@@ -1,6 +1,18 @@
+function getRandomInt(min, max) {      
+  // Create byte array and fill with 1 random number
+  var byteArray = new Uint8Array(1);
+  window.crypto.getRandomValues(byteArray);
+
+  var range = max - min + 1;
+  var max_range = 256;
+  if (byteArray[0] >= Math.floor(max_range / range) * range)
+      return getRandomInt(min, max);
+  return min + (byteArray[0] % range);
+}
+
 let health = document.getElementById('health');
-health.value = 100;
-health.max = 100;
+health.max = getRandomInt(50,150);
+health.value = health.max;
 
 let score = 0
 
@@ -25,6 +37,9 @@ function animateValue(id, start, end, duration) {
   }, stepTime);
 }
 
+
+
+/*
 const dice = {
   sides: 20,
   roll: function () {
@@ -40,7 +55,8 @@ let defHealth = {
     return randomNumber;
   }
 }
-  
+*/
+
  //Prints dice roll to the page
 function printNumber(number) {
   animateValue("placeholder", 0, number, 300);
@@ -54,7 +70,7 @@ function changeImage(imgName) {
 let button = document.getElementById('button');
 
 button.onclick = function() {
-  let result = dice.roll();
+  let result = getRandomInt(1,20);
   health.value -= result; //update Health with damage caused
   indexImage = Math.floor(Math.random() * list.length); //determine indexes and supply 1 random image index
   changeImage(list[indexImage]); //replaces the Goblin image with the random image
@@ -87,7 +103,7 @@ button.onclick = function() {
 
 playAgain.onclick = function() {
   changeImage('./assets/goblin-appear.jpg');
-  health.max = defHealth.roll();
+  health.max = getRandomInt(50, 300);
   health.value = health.max;
   log.innerHTML = " ";
   damage.innerHTML = "A NEW CHALLENGER ARISES!";
